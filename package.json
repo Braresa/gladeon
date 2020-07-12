@@ -1,0 +1,25 @@
+{
+  "name": "gladeon",
+  "version": "1.0.0",
+  "description": "Gladeon bot, made for O grupo, part of the project: Discord bots.",
+  "main": "main.js",
+  "dependencies": {
+    "discord.js": "^12.2.0",
+    "dotenv": "^8.2.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Braresa/gladeon.git"
+  },
+  "keywords": [],
+  "author": "braresa#8045",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Braresa/gladeon/issues"
+  },
+  "homepage": "https://github.com/Braresa/gladeon#readme"
+}
