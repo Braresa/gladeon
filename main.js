@@ -6,6 +6,7 @@ const client = new discord.Client();
 const fs = require("fs");
 const bot = new discord.Client({disableEveryone: true});
 client.commands = new discord.Collection();
+client.functions = new discord.Collection();
 
 // Iniciando command handler.
 
@@ -15,6 +16,17 @@ for(const file of allCommands) {
     const cmd = require(`./commands/${file}`)
     console.log(`${file} carregado com sucesso!`)
     client.commands.set(cmd.name, cmd)
+
+}
+
+// Iniciando functions.
+
+const allFunctions = fs.readdirSync("./functions").filter(file => file.endsWith('.js'));
+
+for(const functionFile of allFunctions) {
+    const func = require(`./functions/${functionFile}`)
+    console.log(`${functionFile} carregado com sucesso!`)
+    client.functions.set(func.name, func)
 
 }
 
