@@ -44,11 +44,23 @@ client.on("message", async message => {
     if(message.channel.type === "dm") return;
     if (!message.content.startsWith(process.env.CLIENT_PREFIX)) return;
 
+    var member = message.member
+
     const args = message.content.slice(process.env.CLIENT_PREFIX.length).trim().split(/ +/g)
     const realCmd = args.shift().toLowerCase();
 
     if(!client.commands.has(realCmd)) return;
+    console.log(message.content)
+
+    if(client.commands.get(realCmd).permission === "NONE") {
+        client.commands.get(realCmd).execute(message,args,client)
+    } else if(client.commands.get(realCmd).permission !== "NONE") {
+    if(message.member.hasPermission(client.commands.get(realCmd).permission) === true) {
     client.commands.get(realCmd).execute(message,args,client)
+    } else if(message.member.hasPermission(client.commands.get(realCmd).permission) !== true) {
+        client.functions.get("embedCreator").execute("#3380FF","Gladeon",null,({name:'Sem permissão!',value: `Você precisa da permissão: *${client.commands.get(realCmd).permission}*`}),message.author,message)
+    }
+    }
 })
 
 console.log(prefix)

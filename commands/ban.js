@@ -2,12 +2,11 @@ const discord = require("discord.js")
 
 module.exports = {
    name: "ban",
+   permission: "BAN_MEMBERS",
    description: "Ban peoples.",
    execute(message,args,client) {
 
-    if(message.member.hasPermission("BAN_MEMBERS") === false) {
-        message.channel.send("Você não tem permissão para executar este comando!")
-    } else {
+    console.log("a")
 
        if(args[0] === undefined) {
            message.channel.send("Mencione alguém para que eu possa banir!")
@@ -29,7 +28,7 @@ module.exports = {
 
            var targetRaw = args[0]
            var targetUser = message.mentions.members.first()
-           var targetUserNotMember = message.mentions.users.first()
+           var targetUserNotMember = message.mentions.users.first() || args[0]
 
            if(targetUser.bannable === true && targetUserNotMember.bot === false) {
             var motivo = args.slice(2).join(' ')
@@ -37,7 +36,7 @@ module.exports = {
             if(!isNaN(dias)) {
             targetUser.ban({days: args[1], reason: motivo})
             .then(message.channel.send(`Sucesso! Usuário banido por **${args[1]}** dia(s)`))
-            .catch(console.error())
+            .catch(message.channel.send("Ops! Aconteceu algum erro ao banir o usuário."),console.error())
         } 
         
         else if(isNaN(dias)) {
@@ -50,6 +49,5 @@ module.exports = {
     }
        }
     }
-}
 }
 }
