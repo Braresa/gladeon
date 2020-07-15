@@ -2,11 +2,10 @@ const discord = require("discord.js")
 
 module.exports = {
    name: "ban",
+   minimum: 3,
    permission: "BAN_MEMBERS",
    description: "Ban peoples.",
    execute(message,args,client) {
-
-    console.log("a")
 
        if(args[0] === undefined) {
            message.channel.send("Mencione alguém para que eu possa banir!")

@@ -13,6 +13,10 @@ module.exports = {
             }
 
             }
-        return result;
+        if(minimum===0) {
+        return true;
+        } else {
+            return result
+        }
     }
 }
