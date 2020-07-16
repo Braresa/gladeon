@@ -12,8 +12,8 @@ module.exports = {
     execute(message,args,client) {
 
        async function searchVideo() {
-           var result = await youtube.searchVideos(args.slice(0).join(" "),2)
-            message.channel.send(result.results[1].url)
+           var result = await youtube.searchVideos(args.slice(0).join(" "),1)
+            message.channel.send(result.results[0].url)
        }
        searchVideo()
     }

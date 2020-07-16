@@ -1,4 +1,5 @@
 // Setando variáveis
+const cooldown = new Set();
 require('dotenv/config');
 const prefix = (process.env.CLIENT_PREFIX)
 const discord = require("discord.js");
@@ -51,6 +52,15 @@ client.on("message", async message => {
     const realCmd = args.shift().toLowerCase();
 
     if(client.commands.has(realCmd)) {
+        if(cooldown.has(message.author.id)) {
+            message.channel.send(`Espero mais um pouco para poder digitar outro comando <@${message.author.id}>!`)
+        } else if(!cooldown.has(message.author.id)) {
+        cooldown.add(message.author.id)
+        setTimeout(() => {
+            cooldown.delete(message.author.id)
+        }, 5000);
+    
+
 
     if(client.commands.get(realCmd).permission === "NONE") {
         var checkArgs = client.functions.get("checkArgs").execute(args,client.commands.get(realCmd).minimum)
@@ -76,6 +86,7 @@ client.on("message", async message => {
 
 } else if(message.content.length > 1 && !message.content.endsWith(process.env.CLIENT_PREFIX)) {
     client.functions.get("embedCreator").execute("#3380FF","Gladeon",null,({name:'Aconteceu um erro.',value: "Comando desconhecido, digite !help para ver os comandos disponíveis."}),message.author,message)
+}
 }
 }
 })
