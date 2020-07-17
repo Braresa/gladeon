@@ -10,9 +10,9 @@ client.functions = new discord.Collection();
 
 // Iniciando command handler.
 
-const allCommands = fs.readdirSync("./commands").filter(file => file.endsWith('.js'));
+const allCommandsM = fs.readdirSync("./commands").filter(file => file.endsWith('.js'));
 
-for(const file of allCommands) {
+for(const file of allCommandsM) {
     const cmd = require(`./commands/${file}`)
     client.commands.set(cmd.name, cmd)
 }
@@ -51,7 +51,7 @@ client.on("message", async message => {
     const args = message.content.slice(process.env.CLIENT_PREFIX.length).trim().split(/ +/g)
     const realCmd = args.shift().toLowerCase();
 
-    if(client.commands.has(realCmd)) {
+    if(message.content.length > 1 && !message.content.endsWith(process.env.CLIENT_PREFIX)) {
         if(cooldown.has(message.author.id)) {
             message.channel.send(`Espero mais um pouco para poder digitar outro comando <@${message.author.id}>!`)
         } else if(!cooldown.has(message.author.id)) {
@@ -59,15 +59,15 @@ client.on("message", async message => {
         setTimeout(() => {
             cooldown.delete(message.author.id)
         }, 5000);
-    
 
+        if(client.commands.has(realCmd)) {
 
     if(client.commands.get(realCmd).permission === "NONE") {
         var checkArgs = client.functions.get("checkArgs").execute(args,client.commands.get(realCmd).minimum)
         if(checkArgs === true) {
         client.commands.get(realCmd).execute(message,args,client)
     } else if(checkArgs === false) {
-        client.functions.get("embedCreator").execute("#3380FF","Gladeon",null,({name:"Aconteceu um erro.",value:`Argumentos incorretos! O comando necessita de pelo menos **${client.commands.get(realCmd).minimum}** argumentos(s), se você tiver dúvida, digite !help **${client.commands.get(realCmd).name}**`}),message.author,message)
+        client.functions.get("embedCreator").execute("#3380FF","Gladeon",null,[{name:"Aconteceu um erro.",value:`Argumentos incorretos! O comando necessita de pelo menos **${client.commands.get(realCmd).minimum}** argumentos(s), se você tiver dúvida, digite !help **${client.commands.get(realCmd).name}**`}],message.author,message)
     }
     } else if(client.commands.get(realCmd).permission !== "NONE") {
     if(message.member.hasPermission(client.commands.get(realCmd).permission) === true) {
@@ -75,17 +75,18 @@ client.on("message", async message => {
         if(checkArgs === true) {
         client.commands.get(realCmd).execute(message,args,client)
     } else if(checkArgs === false) {
-        client.functions.get("embedCreator").execute("#3380FF","Gladeon",null,({name:"Aconteceu um erro.",value:`Argumentos incorretos! O comando necessita de pelo menos **${client.commands.get(realCmd).minimum}** argumento(s), se você tiver dúvida, digite !help **${client.commands.get(realCmd).name}**`}),message.author,message)
+        client.functions.get("embedCreator").execute("#3380FF","Gladeon",null,[{name:"Aconteceu um erro.",value:`Argumentos incorretos! O comando necessita de pelo menos **${client.commands.get(realCmd).minimum}** argumento(s), se você tiver dúvida, digite !help **${client.commands.get(realCmd).name}**`}],message.author,message)
     }
     } else if(message.member.hasPermission(client.commands.get(realCmd).permission) !== true) {
-        client.functions.get("embedCreator").execute("#3380FF","Gladeon",null,({name:'Aconteceu um erro.',value: `Você precisa da permissão: *${client.commands.get(realCmd).permission}*`}),message.author,message)
+        client.functions.get("embedCreator").execute("#3380FF","Gladeon",null,[{name:'Aconteceu um erro.',value: `Você precisa da permissão: *${client.commands.get(realCmd).permission}*`}],message.author,message)
     }
     }
 } else {
     if(message.content.length === 1 || message.content.endsWith(process.env.CLIENT_PREFIX)) {
 
 } else if(message.content.length > 1 && !message.content.endsWith(process.env.CLIENT_PREFIX)) {
-    client.functions.get("embedCreator").execute("#3380FF","Gladeon",null,({name:'Aconteceu um erro.',value: "Comando desconhecido, digite !help para ver os comandos disponíveis."}),message.author,message)
+    client.functions.get("embedCreator").execute("#3380FF","Gladeon",null,[{name:'Aconteceu um erro.',value: "Comando desconhecido, digite !help para ver os comandos disponíveis."}],message.author,message)
+}
 }
 }
 }

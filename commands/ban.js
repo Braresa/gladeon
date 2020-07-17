@@ -4,7 +4,8 @@ module.exports = {
    name: "ban",
    minimum: 3,
    permission: "BAN_MEMBERS",
-   description: "Ban peoples.",
+   description: "Bane o usuário especificado.",
+   example: "!ban @Usuário (tempo) (motivo)",
    execute(message,args,client) {
 
        if(args[0] === undefined) {
