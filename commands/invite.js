@@ -5,6 +5,7 @@ const embedCreator = require("../functions/embedCreator")
 module.exports = {
     name: "invite",
     permission: "MANAGE_GUILD",
+    description: "invite command",
     minimum: 1,
 
     execute(message,args,client) {
