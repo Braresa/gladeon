@@ -1,11 +1,12 @@
 const discord = require("discord.js")
 const { minimum } = require("./ban")
 const embedCreator = require("../functions/embedCreator")
-
+require('dotenv/config');
 module.exports = {
     name: "invite",
     permission: "MANAGE_GUILD",
-    description: "invite command",
+    description: "Comando para convidar uma pessoa ao grupo.",
+    example: `${process.env.CLIENT_PREFIX}invite (@usuário)`,
     minimum: 1,
 
     execute(message,args,client) {

@@ -53,7 +53,7 @@ client.on("message", async message => {
 
     if(message.content.length > 1 && !message.content.endsWith(process.env.CLIENT_PREFIX)) {
         if(cooldown.has(message.author.id)) {
-            message.channel.send(`Espero mais um pouco para poder digitar outro comando <@${message.author.id}>!`)
+            message.channel.send(`Espere mais um pouco para poder digitar outro comando <@${message.author.id}>!`)
         } else if(!cooldown.has(message.author.id)) {
         cooldown.add(message.author.id)
         setTimeout(() => {

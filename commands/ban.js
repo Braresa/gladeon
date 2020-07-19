@@ -1,11 +1,11 @@
 const discord = require("discord.js")
-
+require('dotenv/config');
 module.exports = {
    name: "ban",
    minimum: 3,
    permission: "BAN_MEMBERS",
    description: "Bane o usuário especificado.",
-   example: "!ban @Usuário (tempo) (motivo)",
+   example: `${process.env.CLIENT_PREFIX}ban (@usuário) (tempo) (motivo)`,
    execute(message,args,client) {
 
        if(args[0] === undefined) {

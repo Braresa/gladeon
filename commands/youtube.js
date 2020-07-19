@@ -8,7 +8,8 @@ module.exports = {
     name: "youtube",
     permission: "NONE",
     minimum: 1,
-    description: "search for youtube videos",
+    description: "Procura por vídeos do youtube.",
+    example: `${process.env.CLIENT_PREFIX}youtube (texto a ser pesquisado)`,
     execute(message,args,client) {
 
        async function searchVideo() {
