@@ -1,2 +1,1 @@
-# gladeon
- Gladeon bot, made for O grupo, part of the project.
+trash code made 3 years ago
